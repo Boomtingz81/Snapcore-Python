@@ -1,0 +1,221 @@
+{
+"obd_dataset": [
+{
+"cmd": "ATFCSD",
+"params": "<format_byte>",
+"desc": "Control extraction of BS, ST information from ATFCSD or VTSET_CAN_FC command",
+"example": "ATFCSD",
+"type": "AT",
+"can_ext": false,
+"iso_only": false
+},
+{
+"cmd": "VTSET_CAN_FC",
+"params": "<format_byte>",
+"desc": "Control extraction of BS, ST information from ATFCSD or VTSET_CAN_FC command",
+"example": "VTSET_CAN_FC 1",
+"type": "VT",
+"can_ext": false,
+"iso_only": false
+},
+{
+"cmd": "POWERManage",
+"params": "",
+"desc": "Read the power management settings",
+"example": ">VT PowerManage",
+"type": "VT",
+"can_ext": false,
+"iso_only": false
+},
+{
+"cmd": "VTPDVS",
+"params": "<VOLTS>, <TIMER>",
+"desc": "Set the conditions for entering sleep based on voltage and time",
+"example": ">VTPDVS 6.8, 20",
+"type": "VT",
+"can_ext": false,
+"iso_only": false
+},
+{
+"cmd": "UCS_ATI",
+"params": "<ascii>",
+"desc": "Set the string content displayed by ATI",
+"example": ">VT UCS_ATI Abc1357 v1.35",
+"type": "VT",
+"can_ext": false,
+"iso_only": false
+},
+{
+"cmd": "ATI",
+"params": "",
+"desc": "Display string content set by UCS_ATI",
+"example": ">ATI",
+"type": "AT",
+"can_ext": false,
+"iso_only": false
+},
+{
+"cmd": "UCS_ATDI",
+"params": "<ascii>",
+"desc": "Set string displayed by AT@1",
+"example": ">VT UCS_ATDI This is an OBD communication converter",
+"type": "VT",
+"can_ext": false,
+"iso_only": false
+},
+{
+"cmd": "AT@1",
+"params": "",
+"desc": "Display string content set by UCS_ATDI",
+"example": ">AT@1",
+"type": "AT",
+"can_ext": false,
+"iso_only": false
+},
+{
+"cmd": "UCS_STDI",
+"params": "<ascii>",
+"desc": "Set STDI to display string content",
+"example": ">VT UCS_STDI Xxyyzz vx.x",
+"type": "VT",
+"can_ext": false,
+"iso_only": false
+},
+{
+"cmd": "VT DISP_CAN_WM",
+"params": "<No>",
+"desc": "Display configuration details of the CAN WM sequence",
+"example": ">VT DISP_CAN_WM 1",
+"type": "VT",
+"can_ext": false,
+"iso_only": false
+},
+{
+"cmd": "DISP_ISO_WM",
+"params": "<No>",
+"desc": "Display details of ISO/KWP WM sequence",
+"example": ">VT DISP_ISO_WM 1",
+"type": "VT",
+"can_ext": false,
+"iso_only": true
+},
+{
+"cmd": "VT DISP_CAN_WM F",
+"params": "",
+"desc": "Display all stored CAN WM sequences",
+"example": ">VT DISP_CAN_WM F",
+"type": "VT",
+"can_ext": false,
+"iso_only": false
+},
+{
+"cmd": "VT DISP_ISO_WM F",
+"params": "",
+"desc": "Display all ISO WM sequences",
+"example": ">VT DISP_ISO_WM F",
+"type": "VT",
+"can_ext": false,
+"iso_only": true
+},
+{
+"cmd": "VT DEL_CAN_WM",
+"params": "<No>",
+"desc": "Delete stored CAN WM sequence",
+"example": ">VT DEL_CAN_WM 1",
+"type": "VT",
+"can_ext": false,
+"iso_only": false
+},
+{
+"cmd": "VT DEL_ISO_WM",
+"params": "<No>",
+"desc": "Delete stored ISO WM sequence",
+"example": ">VT DEL_ISO_WM 1",
+"type": "VT",
+"can_ext": false,
+"iso_only": true
+},
+{
+"cmd": "VT DEL_CAN_WM",
+"params": "",
+"desc": "Delete current CAN WM sequence",
+"example": ">VT DEL_CAN_WM",
+"type": "VT",
+"can_ext": false,
+"iso_only": false
+},
+{
+"cmd": "VT DEL_ISO_WM",
+"params": "",
+"desc": "Delete current ISO WM sequence",
+"example": ">VT DEL_ISO_WM",
+"type": "VT",
+"can_ext": false,
+"iso_only": true
+},
+{
+"cmd": "VT M",
+"params": "hhh, hhh-hh, hhhhhhhh-hh, etc.",
+"desc": "Set receive ID filter with format and optional mask",
+"example": ">VT M 7DF, 7FF",
+"type": "VT",
+"can_ext": true,
+"iso_only": false
+},
+{
+"cmd": "VT M",
+"params": "416B10",
+"desc": "Set filter with a specified ID",
+"example": ">VT M 416B10",
+"type": "VT",
+"can_ext": true,
+"iso_only": false
+},
+{
+"cmd": "VT M",
+"params": "**F110, 00FFFF",
+"desc": "Set filter with extended IDs",
+"example": ">VT M **F110, 00FFFF",
+"type": "VT",
+"can_ext": true,
+"iso_only": false
+},
+{
+"cmd": "VT SET_HD",
+"params": "<header_address1>, <header_address2>, <timeout>",
+"desc": "Set header information for CAN communication",
+"example": ">VT SET_HD 7DF, 7E8, 50",
+"type": "VT",
+"can_ext": true,
+"iso_only": false
+},
+{
+"cmd": "VT SET_HD",
+"params": "<header_address>, <timeout>",
+"desc": "Set header info with header only",
+"example": ">VT SET_HD CF33F1, **F110, 50",
+"type": "VT",
+"can_ext": true,
+"iso_only": false
+},
+{
+"cmd": "VT SET_HD",
+"params": "<header_address1>, <header_address2>, <timeout>",
+"desc": "Set header info for CAN",
+"example": ">VT SET_HD 7DF-10, 7E8-F1, 50",
+"type": "VT",
+"can_ext": true,
+"iso_only": false
+},
+{
+"cmd": "VT SET_CAN_FC",
+"params": "<ID1>, <ID2>",
+"desc": "Set CAN FC IDs and frame control",
+"example": ">VT SET_CAN_FC 30 FF 50, 3",
+"type": "VT",
+"can_ext": true,
+"iso_only": false
+}
+]
+}
+

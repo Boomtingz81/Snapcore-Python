@@ -1,0 +1,26 @@
+{
+"ATSP": "Set Protocol: Example: >ATSP 3, description: Sets the protocol; example: >ATSP 3 enables protocol 3.",
+"ATBR": "Set Baud Rate: Example: >ATBR 9600, description: Sets the baud rate; example: >ATBR 9600 sets baud to 9600.",
+"ATZ": "Reset Module: Example: >ATZ, description: Resets the module to default settings.",
+"ATC": "Clear ECU trouble codes: Example: >ATC, description: Clears trouble codes stored in ECU.",
+"ATFA": "Add Filter: Example: >ATFA 7DF, description: Adds a filter for CAN ID 7DF.",
+"VT SWGP": "Set protocol parameters: Example: >VT SWGP AL, description: Sets protocol parameters.",
+"VT SET_UDS": "Set Unique Device ID: >VT SET_UDS abcdefghijklmn1, description: Sets device ID once at factory.",
+"RD_UDS": "Read Unique Device ID: >RD_UDS, description: Reads the device ID.",
+"SET_MAC": "Set MAC address: >VT SET_MAC 11 22 33 44 55 66, description: Sets MAC address once at factory.",
+"RD_MAC": "Read MAC address: >VT RD_MAC, description: Reads the MAC address.",
+"RDSN": "Read Serial Number: >RDSN, description: Reads manufacturer serial number.",
+"VT UCS_ATI": "Set ATI string: >VT UCS_ATI Abc1357 v1.35, description: Sets display string for ATI.",
+"VT UCS_ATDI": "Set AT@1 string: >VT UCS_ATDI This is an OBD communication converter, description: Sets display string for AT@1.",
+"VT UCS_STDI": "Set STDI string: >VT UCS_STDI Xxyyzz vx.x, description: Sets display string for STDI.",
+"VT SET_HD": "Set header addresses: >VT SET_HD 7DF, 7E8, 50, description: Sets header addresses for communication.",
+"VT SET_CAN_FC": "Set CAN Flow Control: >VT SET_CAN_FC F1 30 FF 08 00, description: Sets FC frame content.",
+"VTSET_CAN_FC": "Set CAN FC frame: similar to above, used for advanced filtering. Example: >VTSET_CAN_FC F1 30 FF 08 00, 2, 7DF",
+"VT SET_FM": "Set Filter Mask: >VT SET_FM 7DF, 0FF, description: Configures filter mask.",
+"VT SET_HD": "Set header addresses: >VT SET_HD 7DF, 7E8, 50, description: Sets header addresses.",
+"VTMFCA": "Monitor OBD bus: >VTMFCA, description: Uses current filter settings to monitor bus.",
+"SHOW_BUS": "Estimate bus protocol: >SHOW_BUS CAN, description: Measures external bus protocols.",
+"ST_PROTOCOL_ALL": "Display all protocol details: description: Displays all protocols defined by [ST].",
+"VT_PROTOCOL_ALL": "Display all protocols: description: Displays all protocols defined by [VT]."
+}
+
