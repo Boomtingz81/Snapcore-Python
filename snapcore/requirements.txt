@@ -1,0 +1,118 @@
+# Core OBD-II Communication
+pyserial>=3.5
+obd>=0.7.1
+
+# Bluetooth Communication (for wireless MIC3X2X modules)
+pybluez>=0.23; sys_platform != "win32"
+bleak>=0.21.1
+
+# CAN Bus Support
+python-can>=4.2.0
+cantools>=39.0.0
+
+# Network Communication
+requests>=2.31.0
+urllib3>=2.0.0
+
+# Data Processing and Analysis
+numpy>=1.24.0
+pandas>=2.0.0
+scipy>=1.10.0
+
+# Configuration Management
+pyyaml>=6.0
+toml>=0.10.2
+configparser>=5.3.0
+
+# Logging and Monitoring
+colorlog>=6.7.0
+structlog>=23.1.0
+
+# Data Validation
+cerberus>=1.3.4
+jsonschema>=4.17.0
+
+# Time and Date Handling
+python-dateutil>=2.8.2
+pytz>=2023.3
+
+# Threading and Concurrency
+threading-utils>=0.3
+
+# Data Serialization
+msgpack>=1.0.0
+pickle-mixin>=1.0.2
+
+# Command Line Interface (for main.py)
+click>=8.1.0
+rich>=13.4.0
+prompt-toolkit>=3.0.0
+
+# Development and Testing Dependencies
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-mock>=3.11.0
+pytest-asyncio>=0.21.0
+black>=23.7.0
+flake8>=6.0.0
+mypy>=1.5.0
+isort>=5.12.0
+
+# Documentation
+sphinx>=7.1.0
+sphinx-rtd-theme>=1.3.0
+
+# Performance Monitoring
+psutil>=5.9.0
+memory-profiler>=0.61.0
+
+# Protocol-Specific Libraries
+# ISO 14230 (KWP2000)
+iso14230>=0.1.0; python_version >= "3.8"
+
+# J1939 CAN Protocol
+j1939>=1.0.0
+
+# Utility Libraries
+tqdm>=4.65.0  # Progress bars for long operations
+tabulate>=0.9.0  # Pretty print tables
+humanize>=4.7.0  # Human readable numbers/times
+
+# Optional GUI Dependencies (uncomment if building GUI)
+# tkinter is built-in to Python
+# PyQt5>=5.15.0
+# kivy>=2.2.0
+
+# Windows-specific dependencies
+pywin32>=306; sys_platform == "win32"
+wmi>=1.5.1; sys_platform == "win32"
+
+# Linux-specific dependencies 
+pyudev>=0.24.0; sys_platform == "linux"
+
+# macOS-specific dependencies
+# No specific requirements for macOS serial communication
+
+# Version constraints to ensure compatibility
+# Ensure we have recent enough Python
+python_requires = ">=3.8"
+
+# Pin critical versions to avoid breaking changes
+pyserial>=3.5,<4.0
+obd>=0.7.1,<1.0
+python-can>=4.0.0,<5.0.0
+
+# MIC3X2X specific protocols - these may need custom implementation
+# The MIC3X2X supports additional protocols beyond standard OBD-II:
+# - GM Single Wire CAN (GMLAN) 
+# - Ford Medium Speed CAN (MS CAN)
+# - GM Chassis High-Speed CAN (CH CAN) 
+# - Fiat Low Speed CAN (LS CAN)
+# - SAE J1850 VPW/PWM
+# - ISO 9141-2 / ISO 14230-4
+# - ISO 15765-4 CAN
+# - SAE J1939 CAN
+
+# Optional: For advanced CAN analysis
+# canmatrix>=0.9.0  # CAN database handling
+# python-j2534>=1.0.0  # J2534 PassThru interface 

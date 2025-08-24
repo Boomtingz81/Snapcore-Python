@@ -1,0 +1,994 @@
+{
+  "policy_id": "mitsubishi_phev_ev_v4.2.3",
+  "vlink_version": "4.3.1",
+  "api_compatibility": {
+    "min_vlink_ms_version": "4.0.0",
+    "max_vlink_ms_version": "4.9.x",
+    "backwards_compatible": ["3.2", "3.1", "3.0"],
+    "schema_version": "2024.3",
+    "mitsubishi_integration": "native",
+    "api_endpoints": {
+      "phev_control": "/api/v4/phev",
+      "v2x_management": "/api/v4/v2x",
+      "twin_motor_control": "/api/v4/drivetrain",
+      "energy_flow": "/api/v4/energy",
+      "outlander_specific": "/api/v4/outlander"
+    }
+  },
+  "metadata": {
+    "name": "Mitsubishi PHEV & EV Advanced vlink MS Charging Policy",
+    "description": "Enhanced vlink MS compatible charging policy for Mitsubishi Plug-in Hybrid and Electric vehicles with S-AWC integration, V2X optimization, and CHAdeMO protocol mastery",
+    "manufacturer": "mitsubishi_motors",
+    "policy_type": "production_hybrid",
+    "certification_level": "tier_1_phev",
+    "created": "2024-08-22T10:00:00Z",
+    "updated": "2024-08-22T18:00:00Z",
+    "revision": "4.2.3-stable",
+    "build_number": "2024.08.22.1800",
+    "checksum": "sha256:d9e8a1b7c2d3e4f5678901234567890123456789abcdef0123456789abcdef901",
+    "maintainer": {
+      "organization": "mitsubishi_motors_vlink",
+      "contact": "phev-support@vlink.ms",
+      "documentation": "https://docs.vlink.ms/policies/mitsubishi-phev",
+      "support_tier": "premium_phev"
+    },
+    "revision_notes": {
+      "v4.2.3": "Enhanced V2X capabilities, improved S-AWC integration, CHAdeMO 3.0 readiness",
+      "v4.2.2": "Added Outlander PHEV Gen 4 support, improved battery thermal management",
+      "v4.2.1": "Enhanced twin-motor control algorithms, expanded regional variants"
+    },
+    "localization": {
+      "supported_languages": ["en", "ja", "fr", "de", "es", "pt", "ru", "zh"],
+      "default_language": "en",
+      "regional_compliance": ["JP", "US", "CA", "EU", "AU", "NZ", "RU", "CN"]
+    }
+  },
+  "vehicle_identification": {
+    "vin_patterns": ["JA4*", "JF2*", "ML32*", "6MM*", "JA3*", "JMYU*"],
+    "supported_models": [
+      {"model": "OUTLANDER_PHEV", "year_range": [2014, 2025], "trim": "ES", "generation": "1-4", "market": "GLOBAL"},
+      {"model": "OUTLANDER_PHEV", "year_range": [2014, 2025], "trim": "SE", "generation": "1-4", "market": "GLOBAL"},
+      {"model": "OUTLANDER_PHEV", "year_range": [2014, 2025], "trim": "SEL", "generation": "1-4", "market": "GLOBAL"},
+      {"model": "OUTLANDER_PHEV", "year_range": [2014, 2025], "trim": "GT", "generation": "1-4", "market": "GLOBAL"},
+      {"model": "OUTLANDER_PHEV", "year_range": [2022, 2025], "trim": "Black_Edition", "generation": "3-4", "market": "US"},
+      {"model": "I_MIEV", "year_range": [2012, 2017], "trim": "ES", "market": ["JP", "US", "EU"]},
+      {"model": "I_MIEV", "year_range": [2012, 2017], "trim": "SE", "market": ["JP", "US"]},
+      {"model": "MINICAB_MIEV", "year_range": [2011, 2021], "trim": "Commercial", "market": "JP"},
+      {"model": "MINICAB_MIEV_TRUCK", "year_range": [2013, 2021], "trim": "Commercial", "market": "JP"},
+      {"model": "ECLIPSE_CROSS_PHEV", "year_range": [2021, 2025], "trim": "SEL", "market": "EU"},
+      {"model": "ASX_PHEV", "year_range": [2023, 2025], "trim": "Intense", "market": "EU"},
+      {"model": "DELICA_D5_PHEV", "year_range": [2024, 2025], "trim": "P", "market": "JP"}
+    ],
+    "battery_variants": [
+      {"capacity": "10.5kWh", "chemistry": "LiMn2O4", "pack_voltage": 330, "cells": 80},
+      {"capacity": "12.0kWh", "chemistry": "LiMn2O4", "pack_voltage": 300, "cells": 80},
+      {"capacity": "13.8kWh", "chemistry": "LiMn2O4", "pack_voltage": 300, "cells": 80},
+      {"capacity": "16.0kWh", "chemistry": "LiMn2O4", "pack_voltage": 330, "cells": 88},
+      {"capacity": "20.0kWh", "chemistry": "LiMn2O4", "pack_voltage": 300, "cells": 96},
+      {"capacity": "22.7kWh", "chemistry": "LiNMC811", "pack_voltage": 355, "cells": 96}
+    ],
+    "identification_priority": [
+      "mitsubishi_connect_api",
+      "vin_decode",
+      "phev_system_query",
+      "can_message_analysis",
+      "obd_query",
+      "user_input"
+    ],
+    "phev_system_detection": {
+      "twin_motor_identification": true,
+      "s_awc_system_detection": true,
+      "generator_presence_check": true,
+      "v2x_capability_detection": true
+    }
+  },
+  "vlink_ms_parameters": {
+    "session_management": {
+      "max_session_duration": 720,
+      "idle_timeout": 420,
+      "authentication_required": true,
+      "session_heartbeat_interval": 45,
+      "graceful_termination_timeout": 90,
+      "concurrent_sessions_max": 1,
+      "session_recovery_support": true,
+      "mitsubishi_connect_integration": {
+        "version": "3.1",
+        "remote_control_support": true,
+        "real_time_sync": true,
+        "offline_capability": true
+      },
+      "phev_specific_sessions": {
+        "charging_session": true,
+        "v2x_session": true,
+        "preconditioning_session": true,
+        "generator_session": false
+      }
+    },
+    "communication_stack": {
+      "primary_protocol": "CHAdeMO_2.0",
+      "fallback_protocols": ["CHAdeMO_1.2", "ISO15118-2", "IEC61851-1"],
+      "future_protocols": ["CHAdeMO_3.0", "ISO15118-20"],
+      "protocol_negotiation_timeout": 30,
+      "plug_lock_support": true,
+      "pnc_support": false,
+      "pnc_future_ready": true,
+      "tls_version": "1.3",
+      "mitsubishi_proprietary_v2x": {
+        "enabled": true,
+        "version": "mits_v2x_3.2",
+        "bidirectional_communication": true,
+        "emergency_protocols": true
+      },
+      "chademo_native": {
+        "optimized": true,
+        "version": "2.0_enhanced",
+        "mitsubishi_extensions": true,
+        "backward_compatibility": ["1.2", "1.0"]
+      }
+    },
+    "cloud_integration": {
+      "vlink_ms_endpoint": "https://api-global.vlink.ms/v4",
+      "mitsubishi_connect_bridge": "https://connect.mitsubishi-motors.com/api/v3",
+      "regional_endpoints": {
+        "japan": "https://api-jp.vlink.ms/v4",
+        "north_america": "https://api-us.vlink.ms/v4",
+        "europe": "https://api-eu.vlink.ms/v4",
+        "oceania": "https://api-au.vlink.ms/v4"
+      },
+      "telemetry_endpoint": "wss://telemetry-global.vlink.ms/v4",
+      "data_compression": "lz4",
+      "encryption": "ChaCha20-Poly1305",
+      "batch_upload_size": 100,
+      "offline_buffer_duration": 10800,
+      "phev_data_streaming": {
+        "engine_telemetry": true,
+        "motor_telemetry": true,
+        "generator_telemetry": true,
+        "s_awc_telemetry": true
+      }
+    }
+  },
+  "charging_profile": {
+    "ac_charging": {
+      "max_current": 32,
+      "max_voltage": 240,
+      "max_power": 7400,
+      "phases": 1,
+      "frequency": [50, 60],
+      "power_factor": 0.98,
+      "efficiency": 0.92,
+      "onboard_charger_generations": {
+        "gen1": {"max_power": 3700, "efficiency": 0.88},
+        "gen2": {"max_power": 3700, "efficiency": 0.90},
+        "gen3": {"max_power": 6600, "efficiency": 0.92},
+        "gen4": {"max_power": 7400, "efficiency": 0.94}
+      },
+      "mitsubishi_conservative_charging": {
+        "enabled": true,
+        "battery_longevity_priority": true,
+        "temperature_derating_aggressive": true,
+        "cell_balancing_focus": true
+      },
+      "connector_types": ["Type_1_SAE_J1772", "Type_2_IEC_62196", "Type_1_JIS"],
+      "charging_curves": {
+        "constant_current_phase": {"max_current": 32, "voltage_range": [200, 240]},
+        "constant_voltage_phase": {"voltage": 240, "taper_algorithm": "mitsubishi_gentle"}
+      }
+    },
+    "dc_charging": {
+      "max_current": 125,
+      "max_voltage": 500,
+      "max_power": 50000,
+      "connector_types": ["CHAdeMO", "CCS_Combo_1", "CCS_Combo_2"],
+      "chademo_preferred": true,
+      "preconditioning_support": true,
+      "charging_curve": {
+        "curve_type": "mitsubishi_chademo_optimized_v4",
+        "temperature_compensation": true,
+        "soc_accuracy": 1.0,
+        "battery_health_adaptation": true,
+        "air_cooling_optimization": true,
+        "segments": [
+          {
+            "soc_start": 0,
+            "soc_end": 20,
+            "max_power": 22000,
+            "ramp_rate": 2000,
+            "conditions": ["battery_temp > -10C", "preconditioning_complete"],
+            "cell_balancing": "active"
+          },
+          {
+            "soc_start": 20,
+            "soc_end": 50,
+            "max_power": 22000,
+            "ramp_rate": 1500,
+            "conditions": ["battery_temp < 45C", "voltage_stable"]
+          },
+          {
+            "soc_start": 50,
+            "soc_end": 80,
+            "max_power": 18000,
+            "ramp_rate": 1200,
+            "conditions": ["thermal_management_active", "cell_balance_ok"]
+          },
+          {
+            "soc_start": 80,
+            "soc_end": 90,
+            "max_power": 10000,
+            "ramp_rate": 800,
+            "conditions": ["gentle_charging_mode"],
+            "battery_longevity": "priority"
+          },
+          {
+            "soc_start": 90,
+            "soc_end": 100,
+            "max_power": 5000,
+            "ramp_rate": 400,
+            "conditions": ["precision_balancing"],
+            "final_conditioning": true
+          }
+        ],
+        "environmental_adaptation": {
+          "air_cooling_consideration": true,
+          "ambient_temperature_factor": 0.95,
+          "altitude_compensation": true,
+          "humidity_derating": false
+        }
+      }
+    },
+    "v2x_bidirectional": {
+      "vehicle_to_home": {
+        "enabled": true,
+        "max_power": 1500,
+        "voltage": [100, 120, 240],
+        "frequency": [50, 60],
+        "connector_types": ["AC_Standard", "CHAdeMO_Bidirectional"],
+        "emergency_mode": true,
+        "automatic_transfer_switch": true
+      },
+      "vehicle_to_grid": {
+        "enabled": true,
+        "max_power": 10000,
+        "grid_services": ["frequency_regulation", "peak_shaving", "load_balancing"],
+        "iso15118_20_bpt_ready": true,
+        "aggregator_compatible": true
+      },
+      "vehicle_to_load": {
+        "enabled": true,
+        "max_power": 1500,
+        "portable_outlets": true,
+        "inverter_integrated": true,
+        "camping_mode": true
+      }
+    }
+  },
+  "safety_limits": {
+    "temperature": {
+      "battery_min_c": -25,
+      "battery_max_c": 55,
+      "derating_threshold_c": 40,
+      "emergency_stop_threshold_c": 60,
+      "active_thermal_management": false,
+      "air_cooling_system": {
+        "natural_convection": true,
+        "forced_air": true,
+        "cabin_integration": true,
+        "battery_heater": true
+      },
+      "thermal_management_integration": {
+        "cabin_preconditioning": true,
+        "engine_waste_heat": true,
+        "coolant_circulation": true,
+        "electric_heater_backup": true
+      }
+    },
+    "voltage": {
+      "isolation_resistance_min": 500,
+      "insulation_monitoring": true,
+      "high_voltage_safety": {
+        "manual_service_disconnect": true,
+        "automatic_disconnect_crash": true,
+        "pyrotechnic_disconnect": true,
+        "voltage_monitoring": "continuous"
+      },
+      "ground_fault_threshold": 20,
+      "arc_fault_detection": true,
+      "surge_protection": true
+    },
+    "current": {
+      "overcurrent_protection": true,
+      "ground_fault_detection": true,
+      "leakage_current_monitoring": {
+        "enabled": true,
+        "threshold_ma": 10,
+        "ac_leakage": true,
+        "dc_leakage": true
+      },
+      "contactor_monitoring": {
+        "weld_detection": true,
+        "contact_resistance": true,
+        "switching_cycles": true,
+        "thermal_monitoring": true
+      },
+      "fuse_protection": {
+        "main_fuse": "500A",
+        "auxiliary_fuses": "multiple",
+        "smart_fuses": false
+      }
+    },
+    "mechanical": {
+      "connector_insertion_detection": true,
+      "lock_verification": true,
+      "cable_integrity_check": true,
+      "vibration_monitoring": true,
+      "impact_detection": true,
+      "water_ingress_protection": "IP55"
+    },
+    "phev_specific_safety": {
+      "engine_safety_integration": true,
+      "fuel_system_isolation": true,
+      "exhaust_system_monitoring": true,
+      "hybrid_system_coordination": true,
+      "dual_power_source_management": true
+    }
+  },
+  "vlink_ms_telemetry": {
+    "data_streams": {
+      "high_frequency": {
+        "interval_ms": 100,
+        "parameters": ["voltage", "current", "power", "frequency", "phase_angle"],
+        "compression": "delta_compression",
+        "local_storage_duration": 300
+      },
+      "medium_frequency": {
+        "interval_ms": 2000,
+        "parameters": ["soc", "battery_temp", "energy_delivered", "v2x_status"],
+        "compression": "standard",
+        "local_storage_duration": 1800
+      },
+      "phev_specific": {
+        "interval_ms": 1000,
+        "parameters": [
+          "engine_status",
+          "generator_output",
+          "motor_front_temp",
+          "motor_rear_temp",
+          "inverter_temp",
+          "s_awc_status",
+          "drive_mode",
+          "charge_mode",
+          "fuel_level",
+          "engine_coolant_temp",
+          "transmission_temp"
+        ],
+        "compression": "json_compact",
+        "local_storage_duration": 3600
+      },
+      "low_frequency": {
+        "interval_ms": 10000,
+        "parameters": ["efficiency", "battery_health", "cell_voltages", "maintenance_alerts"],
+        "compression": "none",
+        "local_storage_duration": 86400
+      }
+    },
+    "analytics": {
+      "real_time_processing": true,
+      "ml_inference": {
+        "battery_degradation_prediction": true,
+        "phev_optimization": true,
+        "s_awc_performance_analysis": true,
+        "fuel_efficiency_optimization": true,
+        "v2x_pattern_learning": true,
+        "model_version": "mitsubishi_ml_v3.1.0"
+      },
+      "phev_specific_analytics": {
+        "engine_cycle_optimization": true,
+        "battery_engine_coordination": true,
+        "regenerative_braking_analysis": true,
+        "terrain_adaptation_learning": true
+      }
+    }
+  },
+  "error_handling": {
+    "fault_tolerance": {
+      "retry_attempts": 7,
+      "exponential_backoff": true,
+      "max_retry_interval": 600,
+      "circuit_breaker_threshold": 12,
+      "error_recovery_timeout": 90,
+      "phev_specific_recovery": true
+    },
+    "diagnostics": {
+      "self_test_on_connect": true,
+      "periodic_health_check": 2700,
+      "log_level": "info",
+      "remote_diagnostics_support": true,
+      "mitsubishi_diagnostic_codes": {
+        "enabled": true,
+        "version": "mits_dtc_v3.2",
+        "mut3_compatibility": true,
+        "phev_specific_codes": true
+      },
+      "chademo_diagnostics": {
+        "protocol_validation": true,
+        "connector_diagnostics": true,
+        "isolation_testing": true,
+        "communication_quality": true
+      }
+    },
+    "phev_fault_handling": {
+      "engine_fault_isolation": true,
+      "battery_protection_priority": true,
+      "safe_mode_operation": true,
+      "emergency_engine_start": true,
+      "limp_home_mode": true
+    }
+  },
+  "load_management": {
+    "dynamic_load_balancing": {
+      "enabled": false,
+      "future_ready": true,
+      "phev_priority_logic": true,
+      "engine_generator_fallback": true
+    },
+    "demand_response": {
+      "dr_programs": ["peak_shaving", "load_shifting", "emergency_response"],
+      "response_time_seconds": 30,
+      "minimum_notice_minutes": 60,
+      "opt_out_capability": true,
+      "v2x_integration": true
+    },
+    "priority_management": {
+      "base_priority": "normal",
+      "emergency_priority": "critical",
+      "v2x_priority": "high",
+      "user_override": true,
+      "fleet_management": false
+    }
+  },
+  "manufacturer_specific": {
+    "mitsubishi_motors": {
+      "phev_technology": {
+        "twin_motor_4wd": {
+          "front_motor": {"power_kw": 60, "torque_nm": 137, "type": "permanent_magnet"},
+          "rear_motor": {"power_kw": 70, "torque_nm": 195, "type": "permanent_magnet"},
+          "combined_power_kw": 135,
+          "torque_vectoring": true,
+          "independent_control": true
+        },
+        "s_awc_integration": {
+          "version": "S-AWC_3.0",
+          "electronic_differential": true,
+          "torque_distribution": "variable",
+          "terrain_modes": ["normal", "snow", "lock", "sport", "eco"],
+          "regeneration_coordination": true
+        },
+        "series_parallel_hybrid": {
+          "operating_modes": ["ev", "series", "parallel", "charge"],
+          "seamless_transitions": true,
+          "efficiency_optimization": true,
+          "driver_selectable": true
+        },
+        "engine_generator_system": {
+          "engine_type": "2.4L_MIVEC",
+          "generator_power_kw": 85,
+          "charging_while_driving": true,
+          "mountain_mode": true,
+          "engine_warmup_optimization": true
+        }
+      },
+      "battery_technology": {
+        "chemistry_evolution": {
+          "gen1_gen2": "LiMn2O4",
+          "gen3_gen4": "LiNMC811",
+          "future": "solid_state_ready"
+        },
+        "supplier_partnerships": {
+          "primary": "GS_Yuasa",
+          "secondary": "Toshiba_SCiB",
+          "future": "Samsung_SDI"
+        },
+        "cell_configuration": {
+          "format": "laminated_pouch",
+          "modules": [10, 12, 16, 20],
+          "cells_per_module": [4, 8],
+          "voltage_architecture": [300, 330, 355]
+        },
+        "thermal_management": {
+          "cooling_type": "air_natural_convection",
+          "heating_system": "resistive_ptc",
+          "cabin_integration": true,
+          "engine_heat_recovery": true
+        },
+        "battery_management": {
+          "individual_cell_monitoring": true,
+          "active_balancing": false,
+          "passive_balancing": true,
+          "soh_algorithm": "mitsubishi_proprietary"
+        }
+      },
+      "v2x_capabilities": {
+        "generations": {
+          "gen1": {"max_export_w": 1500, "voltage_v": 100, "ac_only": true},
+          "gen2": {"max_export_w": 1500, "voltage_v": [100, 120], "ac_only": true},
+          "gen3": {"max_export_w": 6000, "voltage_v": [100, 120, 240], "dc_capable": true},
+          "gen4": {"max_export_w": 10000, "voltage_v": "variable", "grid_tie": true}
+        },
+        "emergency_features": {
+          "automatic_backup_power": true,
+          "utility_outage_detection": true,
+          "load_prioritization": true,
+          "battery_reserve_management": true
+        },
+        "grid_integration": {
+          "frequency_regulation": true,
+          "voltage_support": true,
+          "peak_demand_reduction": true,
+          "renewable_integration": true
+        }
+      },
+      "connectivity": {
+        "mitsubishi_connect": {
+          "version": "connect_4.0",
+          "features": {
+            "remote_climate": true,
+            "charging_control": true,
+            "vehicle_finder": true,
+            "maintenance_alerts": true,
+            "driving_analytics": true
+          },
+          "smartphone_integration": {
+            "ios_app": "MyMitsubishi",
+            "android_app": "MyMitsubishi",
+            "api_version": "v3.1",
+            "real_time_updates": true
+          }
+        },
+        "telematics": {
+          "cellular_generation": "4G_LTE",
+          "5g_ready": true,
+          "wifi_hotspot": false,
+          "bluetooth": "5.0",
+          "navigation_integration": true
+        }
+      },
+      "can_bus_integration": {
+        "network_architecture": {
+          "high_speed_can": {"baud_rate": 500000, "buses": 2},
+          "medium_speed_can": {"baud_rate": 125000, "buses": 1},
+          "lin_bus": {"baud_rate": 19200, "nodes": 8}
+        },
+        "ev_phev_messages": {
+          "main_battery_pack": {
+            "soc": {"id": "0x374", "dlc": 8, "scaling": 0.5, "offset": 0},
+            "voltage": {"id": "0x375", "dlc": 8, "scaling": 0.1, "offset": 0},
+            "current": {"id": "0x376", "dlc": 8, "scaling": 0.1, "offset": -1638.4},
+            "temperature": {"id": "0x377", "dlc": 8, "scaling": 0.5, "offset": -40}
+          },
+          "drive_system": {
+            "front_motor": {"id": "0x38C", "dlc": 8, "parameters": ["torque", "rpm", "temp"]},
+            "rear_motor": {"id": "0x38D", "dlc": 8, "parameters": ["torque", "rpm", "temp"]},
+            "generator": {"id": "0x38E", "dlc": 8, "parameters": ["power", "rpm", "temp"]},
+            "engine": {"id": "0x38B", "dlc": 8, "parameters": ["rpm", "load", "temp"]}
+          },
+          "charging_v2x": {
+            "charging_status": {"id": "0x389", "dlc": 8},
+            "v2h_system": {"id": "0x38A", "dlc": 8},
+            "v2g_capability": {"id": "0x38F", "dlc": 8}
+          }
+        }
+      },
+      "vehicle_generations": {
+        "outlander_phev": {
+          "gen1": {
+            "model_years": [2014, 2015, 2016, 2017],
+            "battery_kwh": 12.0,
+            "usable_kwh": 9.8,
+            "engine": "2.0L_MIVEC",
+            "system_power_hp": 200,
+            "ev_range_miles": 32,
+            "charging_ports": ["CHAdeMO", "Type_1"]
+          },
+          "gen2": {
+            "model_years": [2018, 2019, 2020, 2021],
+            "battery_kwh": 13.8,
+            "usable_kwh": 11.4,
+            "engine": "2.4L_MIVEC",
+            "system_power_hp": 221,
+            "ev_range_miles": 38,
+            "charging_ports": ["CHAdeMO", "Type_1"]
+          },
+          "gen3": {
+            "model_years": [2022, 2023, 2024],
+            "battery_kwh": 20.0,
+            "usable_kwh": 17.7,
+            "engine": "2.4L_MIVEC_Atkinson",
+            "system_power_hp": 248,
+            "ev_range_miles": 54,
+            "charging_ports": ["CHAdeMO", "Type_1", "CCS_Option"]
+          },
+          "gen4": {
+            "model_years": [2024, 2025],
+            "battery_kwh": 22.7,
+            "usable_kwh": 20.9,
+            "engine": "2.4L_MIVEC_Turbo",
+            "system_power_hp": 285,
+            "ev_range_miles": 64,
+            "charging_ports": ["CHAdeMO", "CCS_Combo_1", "Type_2"]
+          }
+        },
+        "eclipse_cross_phev": {
+          "gen1": {
+            "model_years": [2021, 2022, 2023, 2024, 2025],
+            "battery_kwh": 13.8,
+            "usable_kwh": 11.0,
+            "engine": "1.5L_MIVEC_Turbo",
+            "system_power_hp": 188,
+            "ev_range_miles": 28,
+            "market": "EU_only"
+          }
+        }
+      },
+      "charging_optimization": {
+        "algorithms": {
+          "battery_longevity": {
+            "slow_charging_preference": true,
+            "temperature_limiting": true,
+            "soc_limiting": 90,
+            "cell_balancing_priority": true
+          },
+          "chademo_optimization": {
+            "protocol_native": true,
+            "mitsubishi_extensions": true,
+            "thermal_derating": "conservative",
+            "isolation_test_enhanced": true
+          },
+          "phev_integration": {
+            "engine_coordination": true,
+            "thermal_sharing": true,
+            "power_split_optimization": true,
+            "fuel_economy_priority": true
+          }
+        }
+      },
+      "drive_modes": {
+        "ev_mode": {
+          "electric_only": true,
+          "battery_priority": true,
+          "silent_operation": true,
+          "max_speed_limited": 75,
+          "power_limited": true
+        },
+        "series_mode": {
+          "engine_generator_only": true,
+          "electric_drive": true,
+          "constant_engine_load": true,
+          "efficiency_optimized": true
+        },
+        "parallel_mode": {
+          "engine_wheels_direct": true,
+          "motor_assist": true,
+          "highway_optimized": true,
+          "fuel_efficiency_priority": true,
+          "seamless_transitions": true
+        },
+        "charge_mode": {
+          "forced_battery_charging": true,
+          "engine_load_increased": true,
+          "mountain_preparation": true,
+          "user_selectable": true,
+          "soc_target": 80
+        },
+        "sport_mode": {
+          "maximum_performance": true,
+          "aggressive_throttle": true,
+          "enhanced_regeneration": true,
+          "s_awc_sport_tuning": true
+        },
+        "eco_mode": {
+          "efficiency_maximized": true,
+          "gentle_acceleration": true,
+          "climate_limited": true,
+          "regeneration_enhanced": true
+        }
+      }
+    }
+  },
+  "regional_variants": {
+    "japan": {
+      "standards_compliance": {
+        "jis_d_1023": true,
+        "jis_c_8715_1": true,
+        "chademo_native": true
+      },
+      "charging_infrastructure": {
+        "type1_connector": true,
+        "chademo_standard": true,
+        "100v_charging": true,
+        "200v_charging": true,
+        "three_phase": false
+      },
+      "v2x_capabilities": {
+        "v2h_standard": true,
+        "power_export_socket": "AC100V_15A",
+        "emergency_power_priority": true,
+        "utility_integration": "tepco_compatible"
+      },
+      "government_incentives": {
+        "cev_subsidy": true,
+        "eco_car_tax": true,
+        "green_license_plate": true
+      }
+    },
+    "north_america": {
+      "standards_compliance": {
+        "sae_j1772": true,
+        "sae_j2847": true,
+        "ul2594": true,
+        "fcc_part_15": true
+      },
+      "charging_infrastructure": {
+        "type1_connector": true,
+        "chademo_available": true,
+        "ccs1_future": true,
+        "120v_charging": true,
+        "240v_charging": true,
+        "480v_dc": false
+      },
+      "v2x_limitations": {
+        "v2h_available": false,
+        "v2g_pilot_programs": true,
+        "utility_restrictions": true,
+        "regulatory_pending": true
+      },
+      "market_specific": {
+        "carb_zev_credits": true,
+        "federal_tax_credit": 7500,
+        "state_incentives": "variable",
+        "hov_lane_access": true
+      }
+    },
+    "europe": {
+      "standards_compliance": {
+        "iec_62196_2": true,
+        "en_50438": true,
+        "ce_marking": true,
+        "wltp_cycle": true
+      },
+      "charging_infrastructure": {
+        "type2_connector": true,
+        "ccs2_available": true,
+        "chademo_limited": true,
+        "230v_single_phase": true,
+        "400v_three_phase": true
+      },
+      "v2x_development": {
+        "v2g_pilots": true,
+        "smart_charging": true,
+        "grid_balancing": true,
+        "renewable_integration": true
+      },
+      "emissions_compliance": {
+        "euro_6d": true,
+        "co2_targets": true,
+        "nox_limits": true,
+        "particulate_limits": true
+      },
+      "market_regulations": {
+        "eu_type_approval": true,
+        "battery_passport": "future_required",
+        "right_to_repair": true,
+        "data_protection": "gdpr"
+      }
+    },
+    "oceania": {
+      "standards_compliance": {
+        "adr_compliance": true,
+        "acma_emc": true,
+        "australian_standards": true
+      },
+      "charging_infrastructure": {
+        "type2_connector": true,
+        "chademo_available": true,
+        "ccs2_growing": true,
+        "240v_single_phase": true,
+        "415v_three_phase": true
+      },
+      "grid_integration": {
+        "aemo_participation": true,
+        "demand_response": true,
+        "renewable_priority": true,
+        "grid_stability_services": true
+      }
+    },
+    "china": {
+      "standards_compliance": {
+        "gb_t_20234": true,
+        "gb_t_27930": true,
+        "ccc_certification": true
+      },
+      "charging_infrastructure": {
+        "gb_t_ac": true,
+        "gb_t_dc": true,
+        "chademo_legacy": true,
+        "220v_ac": true,
+        "380v_three_phase": true
+      },
+      "local_requirements": {
+        "nev_credits": true,
+        "dual_credit_policy": true,
+        "battery_traceability": true,
+        "data_localization": true
+      }
+    }
+  },
+  "chademo_integration": {
+    "protocol_mastery": {
+      "version_support": {
+        "chademo_1_0": "legacy_compatibility",
+        "chademo_1_2": "full_support",
+        "chademo_2_0": "optimized",
+        "chademo_3_0": "ready"
+      },
+      "mitsubishi_extensions": {
+        "enhanced_isolation_test": true,
+        "thermal_management_integration": true,
+        "battery_conditioning_coordination": true,
+        "efficiency_optimization": true
+      },
+      "communication_parameters": {
+        "max_voltage_v": 500,
+        "max_current_a": 125,
+        "communication_timeout_s": 60,
+        "retry_attempts": 5,
+        "error_recovery_enhanced": true
+      }
+    },
+    "connector_specifications": {
+      "mechanical": {
+        "insertion_force_max_n": 200,
+        "retention_force_min_n": 50,
+        "lock_verification": "mandatory",
+        "emergency_release": true
+      },
+      "electrical": {
+        "contact_resistance_max": 0.5,
+        "insulation_resistance_min": 1000,
+        "isolation_test_voltage": 500,
+        "ground_continuity": true
+      },
+      "environmental": {
+        "ip_rating": "IP44",
+        "temperature_range": [-30, 85],
+        "vibration_resistance": "automotive_grade",
+        "uv_resistance": true
+      }
+    },
+    "safety_integration": {
+      "pre_charge_sequence": true,
+      "isolation_monitoring": "continuous",
+      "emergency_shutdown": "immediate",
+      "connector_temperature": "monitored",
+      "cable_integrity": "verified"
+    }
+  },
+  "compliance_and_certification": {
+    "global_standards": [
+      "ISO15118-2",
+      "IEC61851-1",
+      "IEC61851-23",
+      "IEC62196-1",
+      "CHAdeMO_2.0",
+      "SAE_J1772",
+      "SAE_J2847",
+      "UL2594",
+      "UN_ECE_R100"
+    ],
+    "regional_certifications": {
+      "japan": ["JIS", "PSE", "VCCI", "Ministry_Land_Transport"],
+      "north_america": ["UL", "FCC", "EPA", "CARB", "DOT"],
+      "europe": ["CE", "TUV", "VDE", "DEKRA", "E_Mark"],
+      "oceania": ["SAI_Global", "ACMA", "ADR", "Clean_Energy_Regulator"],
+      "china": ["CCC", "MIIT", "NEV_Center", "CATARC"]
+    },
+    "automotive_standards": {
+      "functional_safety": "ISO26262_ASIL_B",
+      "cybersecurity": "ISO21434",
+      "quality_management": "IATF16949",
+      "environmental": "ISO14001"
+    },
+    "phev_specific_compliance": {
+      "emissions": ["Euro_6d", "EPA_Tier_3", "LEV_III"],
+      "fuel_economy": ["WLTP", "EPA_Combined", "JC08"],
+      "noise": ["UN_ECE_R51", "ISO_362"],
+      "hybrid_safety": ["ECE_R100", "FMVSS_305"]
+    }
+  },
+  "version_control": {
+    "semantic_versioning": true,
+    "release_channels": ["stable", "beta", "alpha"],
+    "current_channel": "stable",
+    "rollback_capability": true,
+    "update_mechanism": "secure_ota_with_validation",
+    "compatibility_matrix": {
+      "vlink_ms_4.3.x": "fully_compatible",
+      "vlink_ms_4.2.x": "fully_compatible",
+      "vlink_ms_4.1.x": "fully_compatible",
+      "vlink_ms_4.0.x": "fully_compatible",
+      "mitsubishi_connect_3.x": "native_integration",
+      "chademo_3.0": "ready",
+      "chademo_2.0": "optimized"
+    },
+    "deployment_strategy": {
+      "phased_rollout": {
+        "phase_1": "japan_market",
+        "phase_2": "north_america",
+        "phase_3": "europe_oceania",
+        "phase_4": "emerging_markets"
+      },
+      "testing_protocol": {
+        "hardware_in_loop": true,
+        "vehicle_integration": true,
+        "climate_chamber": true,
+        "emc_validation": true,
+        "durability_testing": 200000
+      },
+      "rollback_triggers": [
+        "safety_incident",
+        "charging_failure_rate > 3%",
+        "phev_coordination_failure",
+        "v2x_malfunction",
+        "battery_degradation_acceleration"
+      ]
+    },
+    "mitsubishi_integration": {
+      "factory_validation": true,
+      "dealer_training": true,
+      "service_documentation": true,
+      "warranty_integration": true,
+      "recall_coordination": true
+    }
+  },
+  "future_readiness": {
+    "technology_roadmap": {
+      "solid_state_batteries": {
+        "timeline": "2027",
+        "capacity_increase": "40%",
+        "charging_speed": "5x_faster",
+        "safety_improvement": "significant"
+      },
+      "chademo_3_0": {
+        "timeline": "2025",
+        "max_power": "150kW",
+        "bidirectional_enhanced": true,
+        "plug_play_charging": true
+      },
+      "autonomous_charging": {
+        "timeline": "2026",
+        "robotic_connection": true,
+        "wireless_positioning": true,
+        "automated_payment": true
+      },
+      "next_gen_v2x": {
+        "timeline": "2025",
+        "smart_home_integration": true,
+        "grid_scale_participation": true,
+        "renewable_optimization": true
+      }
+    },
+    "software_evolution": {
+      "ai_integration": {
+        "predictive_charging": true,
+        "route_optimization": true,
+        "battery_health_ai": true,
+        "energy_arbitrage": true
+      },
+      "connectivity_expansion": {
+        "5g_integration": true,
+        "edge_computing": true,
+        "blockchain_energy": false,
+        "quantum_security": false
+      }
+    }
+  }
+} 

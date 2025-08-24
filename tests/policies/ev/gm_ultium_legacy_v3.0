@@ -1,0 +1,1063 @@
+{
+  "policy_id": "gm_ultium_legacy_v3.0",
+  "vlink_version": "4.1",
+  "schema_version": "1.0.0",
+  "metadata": {
+    "name": "GM Ultium & Legacy EV/PHEV Advanced Charging Policy",
+    "description": "Enhanced vlink MS compatible charging policy for General Motors electric vehicles including legacy Bolt/Volt and new Ultium platform",
+    "manufacturer": "general_motors",
+    "created": "2024-01-15T10:00:00Z",
+    "updated": "2025-08-23T12:00:00Z",
+    "version_notes": "Added Ultium platform support, enhanced safety protocols, bidirectional charging, AI optimization, and advanced battery management",
+    "certification": {
+      "iso15118": "v2.0",
+      "sae_j1772": "v2016",
+      "sae_j2954": "v2.0",
+      "fcc_id": "2AGMX-VLINK4",
+      "ul_listed": true,
+      "energy_star": true
+    },
+    "policy_scope": ["BEV", "PHEV", "EREV"]
+  },
+  "vehicle_identification": {
+    "vin_patterns": ["1G1*", "KL1*", "1GN*", "1GC*", "1GT*", "1GY*", "3GK*"],
+    "supported_models": [
+      {
+        "model": "BOLT_EV",
+        "variants": ["LT", "PREMIER", "REDLINE_EDITION"],
+        "year_range": [2017, 2023],
+        "platform": "BEV2",
+        "model_codes": ["1G1FW", "1G1FX", "1G1FZ"],
+        "market_regions": ["US", "CA", "EU", "KR"]
+      },
+      {
+        "model": "BOLT_EUV",
+        "variants": ["LT", "PREMIER"],
+        "year_range": [2022, 2024],
+        "platform": "BEV2_EUV",
+        "model_codes": ["1G1FY"],
+        "market_regions": ["US", "CA"]
+      },
+      {
+        "model": "VOLT",
+        "variants": ["LT", "PREMIER"],
+        "year_range": [2016, 2019],
+        "platform": "VOLTEC_GEN2",
+        "model_codes": ["1G1RC", "1G1RD"],
+        "market_regions": ["US", "CA"],
+        "discontinued": true
+      },
+      {
+        "model": "EQUINOX_EV",
+        "variants": ["1LT", "2LT", "3LT", "RS"],
+        "year_range": [2024, 2026],
+        "platform": "ULTIUM",
+        "model_codes": ["1GYFZ"],
+        "market_regions": ["US", "CA", "MX"]
+      },
+      {
+        "model": "BLAZER_EV",
+        "variants": ["1LT", "2LT", "RS", "SS"],
+        "year_range": [2024, 2026],
+        "platform": "ULTIUM",
+        "model_codes": ["1GNEC"],
+        "market_regions": ["US", "CA", "MX"]
+      },
+      {
+        "model": "SILVERADO_EV",
+        "variants": ["WT", "LT", "RST", "HIGH_COUNTRY"],
+        "year_range": [2024, 2026],
+        "platform": "ULTIUM",
+        "model_codes": ["1GCFA", "1GCFB"],
+        "market_regions": ["US", "CA", "MX"]
+      },
+      {
+        "model": "CADILLAC_LYRIQ",
+        "variants": ["LUXURY", "TECH", "SPORT"],
+        "year_range": [2023, 2026],
+        "platform": "ULTIUM",
+        "model_codes": ["1GYKP"],
+        "market_regions": ["US", "CA", "EU", "CN"]
+      },
+      {
+        "model": "CADILLAC_ESCALADE_IQ",
+        "variants": ["LUXURY", "SPORT", "PLATINUM"],
+        "year_range": [2025, 2026],
+        "platform": "ULTIUM",
+        "model_codes": ["1GYKN"],
+        "market_regions": ["US", "CA"]
+      }
+    ],
+    "battery_variants": [
+      {"capacity_kwh": 18.4, "type": "PHEV", "chemistry": "NCM622", "platform": "VOLTEC"},
+      {"capacity_kwh": 60.0, "type": "BEV", "chemistry": "NCM622", "platform": "BEV2"},
+      {"capacity_kwh": 65.0, "type": "BEV", "chemistry": "NCM811", "platform": "BEV2"},
+      {"capacity_kwh": 85.0, "type": "BEV", "chemistry": "NCMA", "platform": "ULTIUM"},
+      {"capacity_kwh": 102.0, "type": "BEV", "chemistry": "NCMA", "platform": "ULTIUM"},
+      {"capacity_kwh": 131.0, "type": "BEV", "chemistry": "NCMA", "platform": "ULTIUM"},
+      {"capacity_kwh": 200.0, "type": "BEV", "chemistry": "NCMA", "platform": "ULTIUM"}
+    ]
+  },
+  "vlink_parameters": {
+    "session_management": {
+      "max_session_duration": 1440,
+      "idle_timeout": 900,
+      "authentication_required": true,
+      "multi_factor_auth": true,
+      "myChevrolet_integration": true,
+      "myCadillac_integration": true,
+      "onstar_connectivity": true,
+      "ultifi_platform": true,
+      "session_persistence": true,
+      "automatic_reconnect": true,
+      "guest_charging_support": true,
+      "fleet_management_support": true
+    },
+    "communication_stack": {
+      "primary_protocol": "ISO15118-20",
+      "secondary_protocols": ["ISO15118-2", "DIN70121"],
+      "fallback_protocols": ["SAE_J1772", "IEC61851"],
+      "plug_lock_support": true,
+      "pnc_support": true,
+      "bidirectional_communication": true,
+      "cybersecurity_framework": "ISO15118-20",
+      "encryption": "AES-256",
+      "digital_certificates": true,
+      "gm_proprietary_diagnostics": true,
+      "ultium_energy_management": true
+    }
+  },
+  "charging_profile": {
+    "ac_charging": {
+      "level_1": {
+        "max_current": 12,
+        "max_voltage": 120,
+        "max_power": 1440,
+        "phases": 1,
+        "connector_type": "NEMA_5_15"
+      },
+      "level_2": {
+        "max_current": 48,
+        "max_voltage": 240,
+        "max_power": 11500,
+        "phases": 1,
+        "connector_types": ["J1772", "NEMA_14_50"]
+      },
+      "three_phase": {
+        "max_current": 32,
+        "max_voltage": 400,
+        "max_power": 22000,
+        "phases": 3,
+        "connector_type": "IEC_62196_TYPE_2",
+        "market_regions": ["EU"]
+      },
+      "frequency": 60,
+      "power_factor": 0.98,
+      "thd_limit": 5,
+      "onboard_charger_efficiency": 0.92,
+      "dual_level_charging": true,
+      "smart_charging": true,
+      "load_balancing": true
+    },
+    "dc_charging": {
+      "legacy_platforms": {
+        "max_current": 150,
+        "max_voltage": 500,
+        "max_power": 75000,
+        "connector_standard": "CCS_COMBO_1"
+      },
+      "ultium_platforms": {
+        "max_current": 500,
+        "max_voltage": 800,
+        "max_power": 350000,
+        "connector_standards": ["CCS_COMBO_1", "CCS_COMBO_2"],
+        "800v_architecture": true
+      },
+      "charging_curve": {
+        "curve_type": "gm_ultium_optimized",
+        "dynamic_adjustment": true,
+        "weather_compensation": true,
+        "battery_age_factor": true,
+        "segments": [
+          {
+            "soc_start": 0,
+            "soc_end": 10,
+            "max_power": 200000,
+            "preconditioning_bonus": 50000,
+            "cold_weather_derating": true
+          },
+          {
+            "soc_start": 10,
+            "soc_end": 50,
+            "max_power": 350000,
+            "optimal_efficiency_range": true
+          },
+          {
+            "soc_start": 50,
+            "soc_end": 70,
+            "max_power": 250000,
+            "cell_balancing_active": true
+          },
+          {
+            "soc_start": 70,
+            "soc_end": 80,
+            "max_power": 150000,
+            "battery_protection_priority": true
+          },
+          {
+            "soc_start": 80,
+            "soc_end": 90,
+            "max_power": 75000,
+            "longevity_optimization": true
+          },
+          {
+            "soc_start": 90,
+            "soc_end": 100,
+            "max_power": 25000,
+            "precision_balancing": true
+          }
+        ],
+        "advanced_features": {
+          "preconditioning_optimization": true,
+          "route_based_conditioning": true,
+          "predictive_thermal_management": true,
+          "machine_learning_adaptation": true,
+          "real_time_grid_optimization": true
+        }
+      }
+    },
+    "wireless_charging": {
+      "supported": true,
+      "standard": "SAE_J2954",
+      "max_power": 11000,
+      "efficiency": 0.90,
+      "alignment_tolerance": 100,
+      "foreign_object_detection": true,
+      "living_object_protection": true
+    }
+  },
+  "safety_limits": {
+    "temperature": {
+      "battery_operating_range": {
+        "min_c": -35,
+        "max_c": 55,
+        "optimal_min_c": 20,
+        "optimal_max_c": 40
+      },
+      "derating_thresholds": {
+        "level_1_c": 45,
+        "level_2_c": 50,
+        "level_3_c": 55,
+        "emergency_shutdown_c": 60
+      },
+      "thermal_management": {
+        "active_cooling": true,
+        "active_heating": true,
+        "heat_pump_integration": true,
+        "coolant_heater": true,
+        "battery_warmer": true,
+        "extreme_weather_mode": true,
+        "predictive_conditioning": true,
+        "zone_based_control": true
+      }
+    },
+    "electrical": {
+      "voltage_monitoring": {
+        "isolation_resistance_min": 500,
+        "insulation_monitoring": true,
+        "high_voltage_interlock": true,
+        "service_disconnect": true,
+        "automatic_disconnect": true,
+        "voltage_ripple_limit": 2
+      },
+      "current_protection": {
+        "overcurrent_protection": true,
+        "ground_fault_detection": true,
+        "arc_fault_detection": true,
+        "pyro_fuse_protection": true,
+        "current_sensor_monitoring": true,
+        "differential_protection": true
+      },
+      "power_quality": {
+        "voltage_regulation": true,
+        "frequency_regulation": true,
+        "power_factor_correction": true,
+        "harmonic_filtering": true
+      }
+    },
+    "mechanical": {
+      "connector_lock": {
+        "automatic_locking": true,
+        "force_feedback": true,
+        "tamper_detection": true,
+        "emergency_release": true
+      },
+      "cable_management": {
+        "strain_relief": true,
+        "weather_sealing": "IP67",
+        "temperature_monitoring": true
+      }
+    },
+    "cybersecurity": {
+      "secure_boot": true,
+      "encrypted_communication": true,
+      "certificate_management": true,
+      "intrusion_detection": true,
+      "secure_updates": true,
+      "audit_logging": true,
+      "penetration_testing": true
+    }
+  },
+  "intelligent_charging": {
+    "ultifi_ai_optimization": {
+      "machine_learning_enabled": true,
+      "user_pattern_learning": true,
+      "route_prediction": true,
+      "cost_optimization": true,
+      "carbon_footprint_reduction": true,
+      "predictive_analytics": true,
+      "real_time_adaptation": true
+    },
+    "dynamic_load_management": {
+      "real_time_adjustment": true,
+      "multi_vehicle_coordination": true,
+      "grid_capacity_monitoring": true,
+      "peak_shaving": true,
+      "valley_filling": true,
+      "demand_response_participation": true,
+      "utility_integration": true
+    },
+    "renewable_integration": {
+      "solar_optimization": true,
+      "wind_integration": true,
+      "energy_storage_coordination": true,
+      "carbon_intensity_tracking": true,
+      "renewable_certificates": true,
+      "grid_decarbonization": true
+    }
+  },
+  "bidirectional_charging": {
+    "vehicle_to_grid": {
+      "enabled": true,
+      "max_export_power": 11500,
+      "grid_services": ["frequency_regulation", "voltage_support", "peak_shaving", "spinning_reserve"],
+      "iso15118_20_compliant": true,
+      "utility_partnerships": true,
+      "revenue_optimization": true,
+      "grid_stabilization": true
+    },
+    "vehicle_to_home": {
+      "enabled": true,
+      "max_export_power": 9600,
+      "automatic_transfer_switch": true,
+      "islanding_protection": true,
+      "load_prioritization": true,
+      "backup_duration_estimation": true,
+      "emergency_power_mode": true
+    },
+    "vehicle_to_load": {
+      "enabled": true,
+      "max_export_power": 1800,
+      "outlet_types": ["120V_15A", "240V_20A"],
+      "portable_power_export": true,
+      "recreational_power": true,
+      "worksite_applications": true
+    }
+  },
+  "vlink_telemetry": {
+    "high_frequency_data": {
+      "interval_ms": 200,
+      "parameters": [
+        "instantaneous_power",
+        "voltage_rail_monitoring",
+        "current_phase_monitoring",
+        "power_factor_real_time",
+        "grid_frequency",
+        "harmonic_distortion"
+      ]
+    },
+    "standard_telemetry": {
+      "interval_ms": 1000,
+      "parameters": [
+        "state_of_charge",
+        "state_of_health",
+        "state_of_power",
+        "battery_voltage",
+        "battery_current",
+        "pack_power",
+        "cell_voltage_min_max_delta",
+        "battery_temp_inlet",
+        "battery_temp_outlet",
+        "battery_temp_max",
+        "coolant_temperature",
+        "ambient_temperature",
+        "energy_delivered_session",
+        "energy_delivered_lifetime",
+        "charging_efficiency_instantaneous",
+        "charging_time_remaining",
+        "range_estimate_epa",
+        "range_estimate_real_world",
+        "energy_consumption_rate",
+        "regen_power_available",
+        "thermal_system_status",
+        "cabin_climate_power"
+      ]
+    },
+    "diagnostic_data": {
+      "interval_ms": 5000,
+      "parameters": [
+        "dtc_active_count",
+        "dtc_pending_count",
+        "dtc_history_count",
+        "system_health_score",
+        "component_degradation_tracking",
+        "calibration_status",
+        "software_version_matrix",
+        "hardware_serial_numbers",
+        "service_reminders",
+        "warranty_status"
+      ]
+    },
+    "analytics": {
+      "charging_behavior_analysis": true,
+      "energy_consumption_patterns": true,
+      "cost_benefit_tracking": true,
+      "carbon_footprint_calculation": true,
+      "predictive_maintenance_scoring": true,
+      "user_satisfaction_metrics": true,
+      "grid_impact_assessment": true
+    }
+  },
+  "error_handling": {
+    "fault_tolerance": {
+      "retry_attempts": 5,
+      "exponential_backoff": true,
+      "error_recovery_timeout": 90,
+      "graceful_degradation": true,
+      "redundant_systems": true,
+      "fail_safe_modes": true
+    },
+    "diagnostic_integration": {
+      "gm_global_diagnostics": true,
+      "onstar_remote_diagnostics": true,
+      "ultifi_cloud_diagnostics": true,
+      "predictive_fault_detection": true,
+      "automatic_fault_reporting": true,
+      "dealer_integration": true,
+      "mobile_technician_dispatch": true
+    },
+    "update_management": {
+      "over_the_air_updates": true,
+      "incremental_updates": true,
+      "rollback_capability": true,
+      "staged_deployment": true,
+      "update_verification": true,
+      "user_notification": true
+    }
+  },
+  "manufacturer_specific": {
+    "general_motors": {
+      "platform_architecture": {
+        "legacy_bev2": {
+          "battery_management": "traditional",
+          "charging_capability": "standard",
+          "thermal_system": "liquid_cooled",
+          "voltage_architecture": "400v"
+        },
+        "ultium": {
+          "battery_management": "wireless_bms",
+          "charging_capability": "ultra_fast",
+          "thermal_system": "advanced_liquid",
+          "voltage_architecture": "400v_800v_flexible",
+          "modular_design": true,
+          "scalable_capacity": true
+        }
+      },
+      "battery_technology": {
+        "chemistry_evolution": {
+          "gen1_ncm622": {
+            "energy_density": 200,
+            "cycle_life": 1500,
+            "fast_charge_capability": "moderate",
+            "cost_per_kwh": 150
+          },
+          "gen2_ncm811": {
+            "energy_density": 240,
+            "cycle_life": 2000,
+            "fast_charge_capability": "good",
+            "cost_per_kwh": 130
+          },
+          "ultium_ncma": {
+            "energy_density": 280,
+            "cycle_life": 3000,
+            "fast_charge_capability": "excellent",
+            "cost_per_kwh": 100,
+            "cobalt_reduced": true
+          }
+        },
+        "suppliers": ["LG_Chem", "CATL", "SK_Innovation", "Panasonic"],
+        "cell_formats": ["pouch", "prismatic", "cylindrical_21700"],
+        "module_design": "wireless_bms_enabled",
+        "pack_integration": "structural_battery",
+        "second_life_ready": true
+      },
+      "connectivity_ecosystem": {
+        "infotainment_systems": {
+          "legacy": {
+            "mylink": true,
+            "android_auto": true,
+            "apple_carplay": true,
+            "onstar_4g_lte": true
+          },
+          "ultifi": {
+            "android_automotive": true,
+            "google_built_in": true,
+            "wireless_connectivity": true,
+            "5g_capability": true,
+            "edge_computing": true,
+            "app_marketplace": true
+          }
+        },
+        "mobile_apps": {
+          "myChevrolet": {
+            "remote_start": true,
+            "remote_climate": true,
+            "charging_control": true,
+            "location_services": true,
+            "vehicle_health": true,
+            "energy_insights": true
+          },
+          "myCadillac": {
+            "concierge_services": true,
+            "premium_features": true,
+            "valet_mode": true,
+            "luxury_amenities": true
+          },
+          "onstar": {
+            "emergency_services": true,
+            "security_features": true,
+            "remote_diagnostics": true,
+            "hotspot_services": true
+          }
+        }
+      },
+      "charging_ecosystem": {
+        "network_partnerships": {
+          "ultium_charge_360": {
+            "partner_networks": ["EVgo", "ChargePoint", "Electrify_America", "Pilot_Flying_J"],
+            "plug_and_charge": true,
+            "unified_billing": true,
+            "route_planning": true,
+            "reservation_system": true,
+            "premium_locations": true
+          },
+          "home_charging": {
+            "gm_wall_connector": true,
+            "mobile_connector_kit": true,
+            "smart_home_integration": true,
+            "solar_optimization": true,
+            "time_of_use_scheduling": true,
+            "load_management": true
+          }
+        }
+      },
+      "vehicle_configurations": {
+        "bolt_ev": {
+          "60kwh_gen1": {
+            "battery_capacity_kwh": 60.0,
+            "usable_capacity_kwh": 57.0,
+            "max_dc_power_kw": 55,
+            "max_ac_power_kw": 7.2,
+            "epa_range_miles": 238,
+            "efficiency_mpge": 120,
+            "model_years": [2017, 2019]
+          },
+          "65kwh_gen2": {
+            "battery_capacity_kwh": 65.0,
+            "usable_capacity_kwh": 61.9,
+            "max_dc_power_kw": 55,
+            "max_ac_power_kw": 7.2,
+            "epa_range_miles": 259,
+            "efficiency_mpge": 120,
+            "model_years": [2020, 2023]
+          }
+        },
+        "silverado_ev": {
+          "wt": {
+            "battery_capacity_kwh": 85.0,
+            "usable_capacity_kwh": 80.0,
+            "max_dc_power_kw": 350,
+            "max_ac_power_kw": 11.5,
+            "epa_range_miles": 393,
+            "efficiency_mpge": 102,
+            "towing_capacity_lbs": 8000
+          },
+          "rst_long_range": {
+            "battery_capacity_kwh": 131.0,
+            "usable_capacity_kwh": 125.0,
+            "max_dc_power_kw": 350,
+            "max_ac_power_kw": 19.2,
+            "epa_range_miles": 440,
+            "efficiency_mpge": 98,
+            "towing_capacity_lbs": 10000
+          }
+        },
+        "lyriq": {
+          "luxury_rwd": {
+            "battery_capacity_kwh": 102.0,
+            "usable_capacity_kwh": 95.0,
+            "max_dc_power_kw": 190,
+            "max_ac_power_kw": 11.5,
+            "epa_range_miles": 312,
+            "efficiency_mpge": 105,
+            "luxury_features": true
+          }
+        }
+      },
+      "advanced_features": {
+        "energy_management": {
+          "hilltop_reserve": {
+            "enabled": true,
+            "target_soc": 88,
+            "regen_optimization": true,
+            "mountain_mode": true
+          },
+          "one_pedal_driving": {
+            "aggressive_regen": true,
+            "low_speed_creep": true,
+            "hold_mode": true
+          },
+          "intelligent_range": {
+            "weather_compensation": true,
+            "route_analysis": true,
+            "traffic_consideration": true,
+            "hvac_impact": true,
+            "driving_style_adaptation": true
+          }
+        },
+        "charging_intelligence": {
+          "departure_based_charging": {
+            "cabin_preconditioning": true,
+            "battery_preconditioning": true,
+            "off_peak_optimization": true,
+            "renewable_energy_priority": true,
+            "smart_grid_integration": true,
+            "weather_based_conditioning": true,
+            "calendar_integration": true,
+            "machine_learning_optimization": true,
+            "energy_cost_minimization": true
+          },
+          "location_based_charging": {
+            "home_profile": true,
+            "work_profile": true,
+            "public_charging_preferences": true,
+            "travel_route_optimization": true,
+            "geofencing_automation": true,
+            "favorite_locations": true,
+            "automatic_profile_switching": true,
+            "location_specific_rates": true,
+            "parking_duration_optimization": true
+          },
+          "rate_optimization": {
+            "time_of_use_rates": true,
+            "demand_charges": true,
+            "dynamic_pricing": true,
+            "carbon_intensity_tracking": true,
+            "utility_program_participation": true,
+            "peak_demand_avoidance": true,
+            "grid_services_revenue": true,
+            "renewable_energy_certificates": true,
+            "cost_prediction_algorithms": true
+          },
+          "adaptive_charging": {
+            "weather_pattern_learning": true,
+            "seasonal_adjustments": true,
+            "usage_pattern_recognition": true,
+            "predictive_range_management": true,
+            "emergency_charging_mode": true,
+            "vacation_mode": true,
+            "guest_driver_profiles": true,
+            "shared_vehicle_optimization": true
+          }
+        },
+        "thermal_management": {
+          "intelligent_preconditioning": {
+            "route_based_optimization": true,
+            "weather_forecast_integration": true,
+            "energy_efficient_algorithms": true,
+            "remote_climate_control": true,
+            "scheduled_conditioning": true,
+            "extreme_weather_protection": true
+          },
+          "battery_thermal_optimization": {
+            "cell_level_monitoring": true,
+            "predictive_cooling": true,
+            "heating_strategy_optimization": true,
+            "thermal_runaway_prevention": true,
+            "longevity_focused_thermal_management": true
+          }
+        },
+        "user_experience": {
+          "personalization": {
+            "individual_driver_profiles": true,
+            "charging_preferences": true,
+            "comfort_settings": true,
+            "efficiency_vs_performance_balance": true,
+            "notification_preferences": true
+          },
+          "interface_integration": {
+            "voice_control": true,
+            "mobile_app_control": true,
+            "in_vehicle_display": true,
+            "smart_home_integration": true,
+            "wearable_device_support": true
+          }
+        }
+      },
+      "safety_recalls_mitigations": {
+        "bolt_battery_fire_risk": {
+          "software_update_applied": true,
+          "battery_replacement_program": true,
+          "diagnostic_monitoring_enhanced": true,
+          "charging_limit_removed": false,
+          "park_outside_advisory_lifted": true,
+          "warranty_extension": "8_years_120k_miles",
+          "customer_notification_system": true,
+          "dealer_inspection_program": true,
+          "emergency_response_protocol": true
+        },
+        "ultium_safety_enhancements": {
+          "next_gen_battery_design": true,
+          "improved_thermal_management": true,
+          "enhanced_cell_monitoring": true,
+          "structural_integrity_improved": true,
+          "manufacturing_quality_controls": true,
+          "supplier_quality_assurance": true,
+          "continuous_monitoring_system": true
+        }
+      },
+      "performance_optimization": {
+        "efficiency_modes": {
+          "eco_mode": {
+            "max_efficiency_priority": true,
+            "reduced_hvac_power": true,
+            "optimized_driving_dynamics": true,
+            "regenerative_braking_maximized": true
+          },
+          "normal_mode": {
+            "balanced_performance": true,
+            "standard_hvac_operation": true,
+            "moderate_acceleration": true,
+            "standard_regeneration": true
+          },
+          "sport_mode": {
+            "maximum_performance": true,
+            "enhanced_acceleration": true,
+            "sport_steering_feel": true,
+            "reduced_regeneration_for_feel": true
+          }
+        },
+        "range_optimization": {
+          "intelligent_route_planning": true,
+          "real_time_traffic_integration": true,
+          "elevation_profile_analysis": true,
+          "weather_impact_calculation": true,
+          "charging_station_availability": true,
+          "backup_route_suggestions": true
+        }
+      }
+    }
+  },
+  "fleet_management": {
+    "gm_fleet_services": {
+      "commercial_solutions": true,
+      "uptime_maximization": true,
+      "predictive_maintenance": true,
+      "driver_coaching": true,
+      "route_optimization": true,
+      "energy_cost_management": true,
+      "carbon_reporting": true,
+      "fleet_analytics_dashboard": true,
+      "multi_location_support": true,
+      "scalable_infrastructure": true
+    },
+    "enterprise_features": {
+      "fleet_charging_coordination": true,
+      "load_management": true,
+      "demand_charge_optimization": true,
+      "multi_site_management": true,
+      "custom_reporting": true,
+      "api_integration": true,
+      "role_based_access_control": true,
+      "compliance_monitoring": true,
+      "cost_allocation_tools": true,
+      "sustainability_tracking": true
+    },
+    "telematics_integration": {
+      "real_time_vehicle_monitoring": true,
+      "driver_behavior_analysis": true,
+      "maintenance_scheduling": true,
+      "geofencing_capabilities": true,
+      "emergency_response": true,
+      "theft_protection": true,
+      "usage_based_insurance": true
+    }
+  },
+  "regional_compliance": {
+    "north_america": {
+      "standards": ["UL2202", "UL2594", "SAE_J1772", "SAE_J2954", "FCC_Part_15", "ICES_003"],
+      "grid_codes": ["IEEE_1547", "UL1741", "NERC_PRC"],
+      "regulations": ["NHTSA_FMVSS", "EPA_Emissions", "CARB_ZEV", "DOE_Efficiency"],
+      "incentive_programs": ["federal_tax_credit", "state_rebates", "utility_programs", "infrastructure_grants"],
+      "market_specific": {
+        "united_states": {
+          "state_regulations": ["CARB", "NYSERDA", "RGGI"],
+          "utility_partnerships": ["PG&E", "ConEd", "Duke_Energy", "Xcel"],
+          "charging_networks": ["Electrify_America", "EVgo", "ChargePoint"]
+        },
+        "canada": {
+          "provincial_requirements": ["Ontario_Green", "Quebec_ZEV", "BC_Clean"],
+          "language_requirements": ["english", "french"],
+          "cold_weather_standards": true
+        }
+      }
+    },
+    "europe": {
+      "standards": ["EN61851", "EN62196", "CE_Marking", "RED_2014_53_EU", "EN_ISO_14443"],
+      "grid_codes": ["EN50549", "VDE_AR_N_4100", "G98", "G99"],
+      "regulations": ["GDPR", "WLTP", "EU_Battery_Regulation", "RoHS", "REACH"],
+      "market_access": ["type_approval", "whole_vehicle_homologation", "e_mark"],
+      "country_specific": {
+        "germany": {
+          "grid_integration": ["VDE_AR_N_4100"],
+          "data_protection": ["BDSG"],
+          "charging_infrastructure": ["Ladesäulenverordnung"]
+        },
+        "netherlands": {
+          "smart_charging": ["OCPP_2.0.1"],
+          "grid_balancing": ["USEF"],
+          "privacy_regulations": ["AVG"]
+        },
+        "norway": {
+          "arctic_conditions": true,
+          "hydroelectric_integration": true,
+          "zero_emission_zones": true
+        }
+      }
+    },
+    "china": {
+      "standards": ["GB_T_20234", "GB_T_27930", "GB_T_34014", "CCC_Certification"],
+      "grid_codes": ["GB_T_34014", "Q_GDW_1480"],
+      "regulations": ["NEV_Credits", "Data_Security_Law", "Cybersecurity_Law"],
+      "local_partnerships": true,
+      "government_compliance": {
+        "miit_approval": true,
+        "ndrc_registration": true,
+        "mee_emissions": true,
+        "catarc_testing": true
+      },
+      "market_requirements": {
+        "local_content": "40_percent_minimum",
+        "technology_transfer": true,
+        "joint_venture_compliance": true,
+        "data_localization": true
+      }
+    },
+    "south_korea": {
+      "standards": ["KC_Certification", "KS_C_IEC_61851", "KS_R_ISO_15118"],
+      "connector_types": ["AC3", "DC_Combo_Korean", "CHAdeMO"],
+      "government_incentives": true,
+      "k_eco_compliance": true,
+      "korean_language_support": true
+    },
+    "other_markets": {
+      "japan": {
+        "standards": ["JIS_C_8715", "CHAdeMO_3.0"],
+        "earthquake_safety": true,
+        "tsunami_resilience": true
+      },
+      "australia": {
+        "australian_standards": ["AS_IEC_61851"],
+        "extreme_heat_conditions": true,
+        "bushfire_safety": true
+      },
+      "india": {
+        "bis_standards": ["IS_17017", "IS_17018"],
+        "monsoon_protection": true,
+        "dust_resistance": "IP65"
+      }
+    }
+  },
+  "sustainability": {
+    "lifecycle_management": {
+      "carbon_neutral_manufacturing": true,
+      "renewable_energy_facilities": true,
+      "sustainable_sourcing": true,
+      "circular_design_principles": true,
+      "water_conservation": true,
+      "waste_reduction": true,
+      "supplier_sustainability_requirements": true
+    },
+    "end_of_life": {
+      "battery_recycling": true,
+      "material_recovery": {
+        "lithium_recovery_rate": 0.95,
+        "cobalt_recovery_rate": 0.98,
+        "nickel_recovery_rate": 0.96,
+        "rare_earth_recovery": true
+      },
+      "second_life_applications": {
+        "stationary_energy_storage": true,
+        "grid_scale_batteries": true,
+        "residential_backup_power": true,
+        "renewable_integration": true
+      },
+      "responsible_disposal": true,
+      "takeback_programs": true
+    },
+    "carbon_tracking": {
+      "manufacturing_footprint": true,
+      "operational_emissions": true,
+      "grid_carbon_intensity": true,
+      "offset_programs": true,
+      "scope_1_2_3_emissions": true,
+      "lifecycle_assessment": true,
+      "carbon_neutral_shipping": true,
+      "renewable_energy_matching": true
+    },
+    "environmental_certifications": {
+      "iso_14001": true,
+      "energy_star": true,
+      "green_building_standards": true,
+      "carbon_trust_certification": true,
+      "b_corp_certification": true
+    }
+  },
+  "future_roadmap": {
+    "next_generation_features": {
+      "solid_state_batteries": {
+        "target_timeline": "2027-2030",
+        "energy_density_improvement": "40%",
+        "charging_speed_improvement": "50%",
+        "safety_enhancement": true,
+        "temperature_range_extension": true,
+        "cycle_life_improvement": "3x",
+        "cost_reduction_target": "30%"
+      },
+      "autonomous_charging": {
+        "robotic_charging": true,
+        "wireless_charging_expansion": true,
+        "predictive_charging": true,
+        "autonomous_parking_integration": true,
+        "fleet_autonomous_charging": true
+      },
+      "grid_integration": {
+        "bi_directional_scaling": true,
+        "micro_grid_formation": true,
+        "renewable_integration": true,
+        "energy_arbitrage": true,
+        "virtual_power_plant": true,
+        "peer_to_peer_energy_trading": true
+      },
+      "advanced_materials": {
+        "silicon_nanowire_anodes": true,
+        "lithium_metal_anodes": true,
+        "solid_electrolytes": true,
+        "graphene_applications": true,
+        "bio_based_materials": true
+      }
+    },
+    "technology_evolution": {
+      "connectivity": {
+        "6g_connectivity": true,
+        "satellite_internet": true,
+        "mesh_networking": true,
+        "edge_computing": true,
+        "quantum_communication": true
+      },
+      "security": {
+        "quantum_encryption": true,
+        "blockchain_identity": true,
+        "biometric_authentication": true,
+        "zero_trust_architecture": true,
+        "homomorphic_encryption": true
+      },
+      "artificial_intelligence": {
+        "edge_ai_processing": true,
+        "federated_learning": true,
+        "neuromorphic_computing": true,
+        "quantum_machine_learning": true,
+        "explainable_ai": true
+      },
+      "energy_systems": {
+        "blockchain_energy_trading": true,
+        "smart_contracts": true,
+        "decentralized_energy_markets": true,
+        "carbon_credit_automation": true,
+        "renewable_energy_forecasting": true
+      }
+    },
+    "market_expansion": {
+      "emerging_markets": {
+        "africa_expansion": true,
+        "south_america_growth": true,
+        "southeast_asia_development": true,
+        "middle_east_penetration": true
+      },
+      "vehicle_categories": {
+        "commercial_vehicles": true,
+        "heavy_duty_trucks": true,
+        "marine_applications": true,
+        "aviation_electrification": true,
+        "rail_transportation": true
+      }
+    },
+    "sustainability_goals": {
+      "carbon_negative_by_2040": true,
+      "100_percent_renewable_energy": "2030",
+      "zero_waste_to_landfill": "2025",
+      "water_positive": "2030",
+      "supply_chain_carbon_neutral": "2035"
+    }
+  },
+  "data_analytics": {
+    "big_data_platform": {
+      "real_time_processing": true,
+      "predictive_analytics": true,
+      "machine_learning_models": true,
+      "data_lake_architecture": true,
+      "cloud_native_deployment": true
+    },
+    "insights_generation": {
+      "customer_behavior_analysis": true,
+      "energy_usage_patterns": true,
+      "predictive_maintenance": true,
+      "market_trend_analysis": true,
+      "competitive_benchmarking": true
+    },
+    "privacy_protection": {
+      "data_anonymization": true,
+      "differential_privacy": true,
+      "consent_management": true,
+      "right_to_be_forgotten": true,
+      "data_minimization": true
+    }
+  },
+  "quality_assurance": {
+    "testing_protocols": {
+      "environmental_testing": true,
+      "electromagnetic_compatibility": true,
+      "cybersecurity_testing": true,
+      "interoperability_testing": true,
+      "durability_testing": true,
+      "safety_validation": true
+    },
+    "continuous_improvement": {
+      "field_data_analysis": true,
+      "customer_feedback_integration": true,
+      "supplier_quality_monitoring": true,
+      "process_optimization": true,
+      "six_sigma_methodology": true
+    }
+  }
+} 

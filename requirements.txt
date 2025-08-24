@@ -1,0 +1,25 @@
+# File: requirements.txt
+# Snapcore-Python — minimal runtime dependencies
+
+# --- Core (required) ---
+pyserial>=3.5 # Serial comms with ELM327/VLink adapters
+python-dotenv>=1.0.1 # Load env vars from .env into config
+
+# API server (enabled)
+fastapi>=0.110 # REST + WebSocket framework
+uvicorn[standard]>=0.27 # ASGI server to run FastAPI
+
+# --- Optional (uncomment when you actually need them) ---
+# bleak>=0.21.1 # Bluetooth LE adapters
+# python-can>=4.3 # SocketCAN/PCAN/etc. direct CAN
+# websockets>=10.4 # Standalone websockets (if not using FastAPI WS)
+# rich>=13.7 # Pretty CLI output/logging
+# typer>=0.12 # Ergonomic CLI tool builder
+# pydantic>=2.6 # Strict data models (if you formalize payloads)
+# numpy>=1.26 # Numeric helpers (charts/stats)
+# pandas>=2.2 # CSV/log analysis
+
+# --- Dev/Test (keep commented in prod; use a separate dev-requirements.txt ideally) ---
+# pytest>=8.0 # Unit tests
+# pytest-asyncio>=0.23 # Async tests
+# ruff>=0.4 # Lint/format
